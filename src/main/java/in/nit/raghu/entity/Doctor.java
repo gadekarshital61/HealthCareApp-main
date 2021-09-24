@@ -5,9 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import in.nit.raghu.entity.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,4 +46,12 @@ public class Doctor {
 	@Column(name="docnote")
 	private String note;
 	
+	@Column(name="docimg")
+	private String photoLoc;
+
+
+	//----------Association Mapping------------------
+	@ManyToOne
+	@JoinColumn(name="spec_id_fk")
+	private Specialization specialization; //HAS-A
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import in.nit.raghu.entity.Doctor;
 import in.nit.raghu.exception.DoctorNotFoundException;
 import in.nit.raghu.service.DoctorService;
+import in.nit.raghu.service.SpecializationService;
 
 @Controller
 @RequestMapping("/doctor")
@@ -22,6 +23,13 @@ public class DoctorController {
 	
 	@Autowired
 	private DoctorService service;
+	
+	@Autowired
+	private SpecializationService specializationService;
+
+	private void createDyanamicUi(Model model) {
+		model.addAttribute("specializations", specializationService.getSpecIdAndName());
+	}
 
 	//1. show Register page
 	@GetMapping("/register")
@@ -31,6 +39,7 @@ public class DoctorController {
 			) 
 	{
 		model.addAttribute("message", message);
+		createDyanamicUi(model);
 		return "DoctorRegister";
 	}
 	
@@ -38,8 +47,7 @@ public class DoctorController {
 	@PostMapping("/save")
 	public String save(
 			@ModelAttribute Doctor doctor,
-			RedirectAttributes attributes
-			)
+			RedirectAttributes attributes)
 	{
 		Long id = service.saveDoctor(doctor);
 		attributes.addAttribute("message", "Doctor ("+id+") is created");
@@ -90,6 +98,7 @@ public class DoctorController {
 		try {
 			Doctor doc = service.getOneDoctor(id);
 			model.addAttribute("doctor", doc);
+			createDyanamicUi(model);
 			page = "DoctorEdit";
 		} catch (DoctorNotFoundException e) {
 			e.printStackTrace();

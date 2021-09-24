@@ -30,6 +30,7 @@ public class DoctorServiceImpl implements DoctorService{
 	@Override
 	public void removeDoctor(Long id) {
 		repo.delete(getOneDoctor(id));
+		
 	}
 
 	@Override

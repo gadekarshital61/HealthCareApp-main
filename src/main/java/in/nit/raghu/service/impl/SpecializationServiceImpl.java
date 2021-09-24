@@ -1,7 +1,7 @@
 package in.nit.raghu.service.impl;
 
 import java.util.List;
-
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import in.nit.raghu.exception.SpecializationNotFoundException;
 import in.nit.raghu.entity.Specialization;
 import in.nit.raghu.repo.SpecializationRepository;
 import in.nit.raghu.service.SpecializationService;
+import in.nit.raghu.util.MyCollectionsUtil;
 
 @Service
 public class SpecializationServiceImpl implements SpecializationService {
@@ -80,6 +81,13 @@ public boolean isSpecNameExistForEdit(String specName, Long id) {
 	Integer count=repo.getSpecNameCountForEdit(specName,id);
 	boolean exist=count>0? true:false;
 	return exist;
+}
+
+@Override
+public Map<Long, String> getSpecIdAndName() {
+	List<Object[]> list = repo.getSpecIdAndName();
+	Map<Long,String> map = MyCollectionsUtil.convertToMap(list);
+	return map;
 }
 
 

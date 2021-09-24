@@ -1,5 +1,7 @@
 package in.nit.raghu.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,5 +21,9 @@ public interface SpecializationRepository extends JpaRepository<Specialization, 
    
    @Query("SELECT COUNT(specName) FROM Specialization WHERE specName=:specName AND id!=:id")
    public Integer getSpecNameCountForEdit(String specName,Long id);
+   
+   //for module integration
+   @Query("SELECT id,specName FROM Specialization ")
+	List<Object[]> getSpecIdAndName();
    
 }

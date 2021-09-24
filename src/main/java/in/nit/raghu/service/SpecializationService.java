@@ -1,6 +1,7 @@
 package in.nit.raghu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import in.nit.raghu.entity.Specialization;
 
@@ -19,5 +20,8 @@ public interface SpecializationService {
 	//method for ajax bug fix during edit time
 	public boolean isSpecCodeExistForEdit(String specCode,Long id);
 	public boolean isSpecNameExistForEdit(String specName, Long id);
+	
+	//for module integration
+	Map<Long,String> getSpecIdAndName();
 	
 }
