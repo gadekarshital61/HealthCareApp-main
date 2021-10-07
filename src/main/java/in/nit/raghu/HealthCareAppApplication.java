@@ -11,6 +11,7 @@ public class HealthCareAppApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HealthCareAppApplication.class, args);
+		
 	}
 	
 }

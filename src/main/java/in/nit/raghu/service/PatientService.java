@@ -7,8 +7,8 @@ import in.nit.raghu.entity.Patient;
 public interface PatientService {
 	
 	public Long savePatient(Patient patient);
-	public List<Patient> getAllPatient();
-	public void removePatient(Long id);
+	public List<Patient> getAllPatients();
+	public void deletePatient(Long id);
 	public Patient getOnePatient(Long id);
 	public void updatePatient(Patient patient);
 

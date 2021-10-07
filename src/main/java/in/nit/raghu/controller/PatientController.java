@@ -27,89 +27,64 @@ public class PatientController {
 	
 	//1. show Register page
 		@GetMapping("/register")
-		public String showReg(
-				@RequestParam(value = "message",required = false)String message,
-				Model model) 
-		{
-			model.addAttribute("message", message);
+		public String registerPatient(Model model) {
+			model.addAttribute("patient",new Patient());
 			return "PatientRegister";
 		}
 		
 		//2 save on submit
 		@PostMapping("/save")
-		public String save(@ModelAttribute Patient patient,
-				RedirectAttributes attributes)
-		{
-			Long id=service.savePatient(patient);
-			attributes.addAttribute("message","patient ("+id+") is created");
-			return "redirect:register";
+		public String savePatient(@ModelAttribute Patient patient, Model model) {
+			java.lang.Long id=service.savePatient(patient);
+			model.addAttribute("message","Patient created with Id:"+id);
+			model.addAttribute("patient",new Patient()) ;
+			return "PatientRegister";
 		}
-		
-		//3 Display data page
+        
+		//3 display all patients
 		@GetMapping("/all")
-		public String display(Model model,
-				@RequestParam (value="message",required=false)String message)
-		{
-			List<Patient> list=service.getAllPatient();
-			model.addAttribute("List",list);
+		public String getAllPatients(Model model,
+				@RequestParam(value = "message", required = false) String message) {
+			List<Patient> list=service.getAllPatients();
+			model.addAttribute("list",list);
 			model.addAttribute("message",message);
 			return "PatientData";
 		}
-		
-        //4 delete by id
+
+		 //4 delete by id
 		@GetMapping("/delete")
-		public String delete(
-				@RequestParam("id")Long id,
-				RedirectAttributes attributes
-				)
-		{
-			String message = null;
+		public String deletePatient(@RequestParam Long id, RedirectAttributes attributes) {
 			try {
-				service.removePatient(id);
-				message = "Doctor removed";
-			} catch (PatientNotFoundException e) {
-				e.printStackTrace();
-				message = e.getMessage();
+				service.deletePatient(id);
+				attributes.addAttribute("message","Patient deleted with Id:"+id);
+			} catch(PatientNotFoundException e) {
+				e.printStackTrace() ;
+				attributes.addAttribute("message",e.getMessage());
 			}
-			attributes.addAttribute("message", message);
 			return "redirect:all";
 		}
-		
-		//5. show edit
+        
+		//5 edit patient
 		@GetMapping("/edit")
-		public String edit(
-				@RequestParam("id")Long id,
-				Model model,
-				RedirectAttributes attributes)
-		{
-			String page = null;
+		public String editPatient(@RequestParam Long id, Model model, RedirectAttributes attributes) {
+			String page=null;
 			try {
-				Patient patient = service.getOnePatient(id);
-				model.addAttribute("Patient", patient);
-				page = "PatientEdit";
-			} catch (PatientNotFoundException e) {
-				e.printStackTrace();
-				attributes.addAttribute("message", e.getMessage());
-				page = "redirect:all";
+				Patient ob=service.getOnePatient(id);
+				model.addAttribute("patient",ob);
+				page="PatientEdit";
+			} catch(PatientNotFoundException e) {
+				e.printStackTrace() ;
+				attributes.addAttribute("message",e.getMessage());
+				page="redirect:all";
 			}
 			return page;
 		}
-		
-		
-		//6. do update
+        
+		//6 update patient 
 		@PostMapping("/update")
-		public String doUpdate(
-				@ModelAttribute Patient patient,
-				RedirectAttributes attributes
-				) 
-		{
+		public String updatePatient(@ModelAttribute Patient patient, RedirectAttributes attributes) {
 			service.updatePatient(patient);
-			attributes.addAttribute("message", patient.getId()+", updated!");
+			attributes.addAttribute("message","Patient updated");
 			return "redirect:all";
 		}
-		
-		//7. email and mobile duplicate validations (AJAX)
-		
-		//8. excel export
-		
 }

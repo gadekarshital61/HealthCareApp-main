@@ -16,22 +16,17 @@
                 <table class="table table-hover">
                     <tr class="bg-info text-white">
                         <th>NAME</th>
-                        <th>PHONE</th>
-                        <!--<th>GENDER</th>-->
-                        
-                       <!-- <th>MARIAL STATUS</th>-->
-                        <th>PRESENT ADDRESS</th>
-                        <th>COMMUNICATION ADDRESS</th>
-                        <!--<th>PAST MEDICAL HISTORY</th>-->
-                        <th>OTHER DETAILS</th>
+                        <th>GENDER</th>
+                        <th>MOBILE</th>
+                        <th>MEDICAL HISTORY</th>
                         <th>OPERATION</th>
                     </tr>
                 	<tr th:each="ob:${list}">
+                		
                     	<td>[[${ob.firstName + ' ' +ob.lastName}]]</td>
-                    	<td th:text="${ob.phone}"></td>
-                    	<td th:text="${ob.presentAddress}"></td>
-                    	<td th:text="${ob.communicationAddress}"></td>
-                    	<td th:text="${ob.otherDetails}"></td>
+                    	<td th:text="${ob.gender}"></td>
+                    	<td th:text="${ob.mobile}"></td>
+                    	<td>[[${ob.mediHistory +"-"+ ob.ifOther}]]</td>
                     	<td>
                     		<a th:href="@{/patient/delete(id=${ob.id})}" class="btn btn-danger">DELETE <i class="fa fa-trash-o" aria-hidden="true"></i> </a> | 
                     		<a th:href="@{/patient/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
