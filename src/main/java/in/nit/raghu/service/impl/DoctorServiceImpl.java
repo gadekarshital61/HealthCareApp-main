@@ -7,22 +7,44 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.nit.raghu.constants.UserRoles;
+import in.nit.raghu.entity.User;
 import in.nit.raghu.entity.Doctor;
 import in.nit.raghu.exception.DoctorNotFoundException;
 import in.nit.raghu.repo.DoctorRepository;
 import in.nit.raghu.service.DoctorService;
+import in.nit.raghu.service.UserService;
 import in.nit.raghu.util.MyCollectionsUtil;
+import in.nit.raghu.util.UserUtil;
 
 @Service
 public class DoctorServiceImpl implements DoctorService{
 	
 	@Autowired
 	private DoctorRepository repo;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private UserUtil util;
+
 
 	@Override
 	public Long saveDoctor(Doctor doc) {
-		return repo.save(doc).getId();
+		Long id = repo.save(doc).getId();
+		if(id!=null) {
+			User user = new User();
+			user.setDisplayName(doc.getFirstName()+" "+doc.getLastName());
+			user.setUsername(doc.getEmail());
+			user.setPassword(util.genPwd());
+			user.setRole(UserRoles.DOCTOR.name());
+			userService.saveUser(user);
+			// TODO : Email part is pending
+		}
+		return id;
 	}
+
 
 	@Override
 	public List<Doctor> getAllDoctors() {

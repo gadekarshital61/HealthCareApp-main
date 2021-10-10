@@ -47,6 +47,9 @@ public class Patient {
 	@Column(name="patientmobile")
 	private String mobile;
 	
+	@Column(name="patientemail")
+	private String email;
+	
 	@Column(name="patientDOB")
 	@DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
@@ -74,4 +77,6 @@ public class Patient {
 	
 	@Column(name="patientnote")
 	private String note;
+
+	
 }

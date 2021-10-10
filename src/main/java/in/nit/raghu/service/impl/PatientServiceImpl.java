@@ -1,28 +1,44 @@
 package in.nit.raghu.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.nit.raghu.constants.UserRoles;
+import in.nit.raghu.entity.User;
 import in.nit.raghu.entity.Patient;
-import in.nit.raghu.exception.DoctorNotFoundException;
-import in.nit.raghu.exception.PatientNotFoundException;
 import in.nit.raghu.repo.PatientRepository;
 import in.nit.raghu.service.PatientService;
+import in.nit.raghu.service.UserService;
+import in.nit.raghu.util.UserUtil;
 
 @Service
 public class PatientServiceImpl implements PatientService {
     
 	@Autowired
 	private PatientRepository repo;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserUtil util;
 	
 	@Override
 	@Transactional
 	public Long savePatient(Patient patient) {
-		return repo.save(patient).getId();
+		Long id= repo.save(patient).getId();
+		if(id!=null) {
+			User user = new User();
+			user.setDisplayName(patient.getFirstName()+" "+patient.getLastName());
+			user.setUsername(patient.getEmail());
+			user.setPassword(util.genPwd());
+			user.setRole(UserRoles.PATIENT.name());
+			userService.saveUser(user);
+			// TODO : Email part is pending
+		}
+		return id;
+	
 	}
 
 	@Override

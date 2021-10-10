@@ -45,6 +45,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Override
 	public void updateAppointment(Appointment appointment) {
 		repo.save(appointment);		
+		
 	}
 
 }

@@ -1,13 +1,14 @@
 package in.nit.raghu;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
+import java.util.UUID;
+//import java.util.stream.Collectors;
 
 public class Test {
 	public static void main(String[] args) {
-		//JDK 9
+		/*//JDK 9
 		List<Object[]> list = List.of(
 				new Object[] {10,"AA"},
 				new Object[] {11,"BB"},
@@ -32,4 +33,12 @@ public class Test {
 					ob[1].toString());
 		}
 	}
+	*/
+	//Universally Unique IDentifier  : UUID (String)
+			String pwd = UUID.randomUUID()
+					.toString()
+					.replace("-","")
+					.substring(0, 8);
+			System.out.println(pwd);
+		}
 }
