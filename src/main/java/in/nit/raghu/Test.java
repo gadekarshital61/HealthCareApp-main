@@ -1,9 +1,11 @@
 package in.nit.raghu;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 //import java.util.HashMap;
 //import java.util.List;
 //import java.util.Map;
-import java.util.UUID;
+//import java.util.UUID;
 //import java.util.stream.Collectors;
 
 public class Test {
@@ -35,10 +37,16 @@ public class Test {
 	}
 	*/
 	//Universally Unique IDentifier  : UUID (String)
-			String pwd = UUID.randomUUID()
-					.toString()
-					.replace("-","")
-					.substring(0, 8);
-			System.out.println(pwd);
+	/*
+	 * String pwd = UUID.randomUUID() .toString() .replace("-","") .substring(0, 8);
+	 * System.out.println(pwd);
+	 */
+		
+        String pwd = "SAM";
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPwd = encoder.encode(pwd);
+		
+		System.out.println(encPwd);
 		}
 }
