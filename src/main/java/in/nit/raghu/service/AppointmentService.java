@@ -12,5 +12,6 @@ public interface AppointmentService {
 	public void deleteAppointment(Long id);
 	public void updateAppointment(Appointment appointment);
 	
-
+    // book appointment slot for doctor
+	List<Object[]> getAppoinmentsByDoctor(Long docId);
 }

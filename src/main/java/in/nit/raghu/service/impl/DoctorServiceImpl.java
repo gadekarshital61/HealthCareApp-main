@@ -15,6 +15,7 @@ import in.nit.raghu.repo.DoctorRepository;
 import in.nit.raghu.service.DoctorService;
 import in.nit.raghu.service.UserService;
 import in.nit.raghu.util.MyCollectionsUtil;
+import in.nit.raghu.util.MyMailUtil;
 import in.nit.raghu.util.UserUtil;
 
 @Service
@@ -28,19 +29,32 @@ public class DoctorServiceImpl implements DoctorService{
 	
 	@Autowired
 	private UserUtil util;
+	
+	@Autowired
+	private MyMailUtil mailUtil ;
+
 
 
 	@Override
 	public Long saveDoctor(Doctor doc) {
 		Long id = repo.save(doc).getId();
 		if(id!=null) {
+			String pwd = util.genPwd();
 			User user = new User();
 			user.setDisplayName(doc.getFirstName()+" "+doc.getLastName());
 			user.setUsername(doc.getEmail());
-			user.setPassword(util.genPwd());
+			//user.setPassword(util.genPwd());
 			user.setRole(UserRoles.DOCTOR.name());
-			userService.saveUser(user);
+			//userService.saveUser(user);
 			// TODO : Email part is pending
+			Long genId  = userService.saveUser(user);
+			if(genId!=null)
+				new Thread(new Runnable() {
+					public void run() {
+						String text = "Your uname is " + doc.getEmail() +", password is "+ pwd;
+						mailUtil.send(doc.getEmail(), "DOCTOR ADDED", text);
+					}
+				}).start();
 		}
 		return id;
 	}
@@ -84,6 +98,13 @@ public class DoctorServiceImpl implements DoctorService{
 	public Map<Long, String> getDoctorIdAndNames() {
 		List<Object[]> list=repo.getDoctorIdAndNames();
 		return MyCollectionsUtil.convertToMapIndex(list);
+	}
+
+
+	@Override
+	public List<Doctor> findDoctorBySpecName(Long specId) {
+		// TODO Auto-generated method stub
+		return repo.findDoctorBySpecName(specId);
 	}
 
 

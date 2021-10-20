@@ -24,4 +24,6 @@ public interface SpecializationService {
 	//for module integration
 	Map<Long,String> getSpecIdAndName();
 	
+	
+	
 }

@@ -1,10 +1,10 @@
 server:
-  port: 9090
+  port: 9696
   
 master:
  user:
-  name: NIT
-  email: nit@gmail.com
+  name: SHITAL
+  email: gadekarshital61@gmail.com
 
 spring:
   datasource:

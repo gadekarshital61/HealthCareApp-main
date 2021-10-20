@@ -15,4 +15,7 @@ public interface DoctorService {
 	
 	//for module integration
 	public Map<Long,String> getDoctorIdAndNames();
+	
+	//for slot view integration
+	public List<Doctor> findDoctorBySpecName(Long specId);
 }

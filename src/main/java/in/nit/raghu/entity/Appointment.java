@@ -43,6 +43,7 @@ public class Appointment {
       @Column(name="aptdetails")
       private String details;
       
+      
       @Column (name="aptfee")
       private Double fee;
       
