@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import in.nit.raghu.entity.User;
 import in.nit.raghu.repo.UserRepository;
@@ -56,6 +57,14 @@ public class UserServiceImpl implements UserService,UserDetailsService  {
 				    Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
 					);
 		}
+	}
+
+	@Override
+	@Transactional
+	public void updateUserPwd(String pwd, Long userId) {
+		// TODO Auto-generated method stub
+		String encPwd = passwordEncoder.encode(pwd);
+		repo.updateUserPwd(encPwd, userId);
 	}
 
 }

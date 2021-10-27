@@ -8,4 +8,7 @@ public interface UserService {
 	
 	Long saveUser(User user);
 	Optional<User> findByUsername(String username);
+	
+	// update password 
+	void updateUserPwd(String pwd, Long userId);
 }
