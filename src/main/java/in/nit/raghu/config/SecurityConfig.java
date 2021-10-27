@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import in.nit.raghu.constants.UserRoles;
 
@@ -39,9 +40,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   		 .and()
   		 .formLogin()
+  		  //show login page
+  		 .loginPage("/user/login") 
+  		 .loginProcessingUrl("/login")  //POST ->do login
   		 .defaultSuccessUrl("/spec/all",true)
+  		 
+  		 //if login failed 
+  		 .failureUrl("/user/login?error=true")   
 
   		 .and()
-  		 .logout();
+  		 .logout()
+  		  // for logout
+    	 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+    	 //on logout 
+    	 .logoutSuccessUrl("/user/login?logout=true")
+    	 ;
       }
+
+	
 }
