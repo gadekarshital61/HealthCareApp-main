@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   		  //show login page
   		 .loginPage("/user/login") 
   		 .loginProcessingUrl("/login")  //POST ->do login
-  		 .defaultSuccessUrl("/spec/all",true)
+  		 .defaultSuccessUrl("/spec/setup",true)
   		 
   		 //if login failed 
   		 .failureUrl("/user/login?error=true")   
