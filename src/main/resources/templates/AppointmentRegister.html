@@ -45,7 +45,7 @@
                 <label for="date">Date</label>
               </div>
               <div class="col-4">
-                <input type="date" name="date" id="date" class="form-control" />
+                <input type="date" name="date" id="date" class="form-control" datepicker" autocomplete="off" readonly/>
               </div>
               <div class="col-6">
                 <span id="dateError"></span>
@@ -110,5 +110,12 @@
         </div>
       </div>
     </div>
+    
+    <script>
+    	$('.datepicker').datepicker({
+			startDate : new Date()
+		})
+    </script>
+    
   </body>
 </html>

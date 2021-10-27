@@ -32,7 +32,7 @@ public class Appointment {
       @Column(name="id")
       private Long id;
       
-      @DateTimeFormat(iso=ISO.DATE)
+      @DateTimeFormat(pattern = "MM/dd/yyyy")
       @Temporal(TemporalType.DATE)
       @Column(name="date")
       private Date date;
